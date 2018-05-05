@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<canvas id="map" width="1024" height="1024" style="background-color: pink; float: left;"></canvas>
+	<div>
+		<form>
+			<input type="radio" name="tileType" value="Water" onChange="radioButton(0)" checked> Water
+			<br>
+			<input type="radio" name="tileType" value="Sand" onChange="radioButton(1)"> Sand
+			<br>
+			<input type="radio" name="tileType" value="Dirt" onChange="radioButton(2)"> Dirt
+			<br>
+			<input type="radio" name="tileType" value="Grass" onChange="radioButton(3)"> Grass
+			<br>
+		</form>
+		<button type="button" onclick="fillButton()" style="width: 200px;">Fill</button>
+	</div>
+
+	<script src="js/Map.js"></script>
+	<script src="js/Input.js"></script>
+	<script src="js/Engine.js"></script>
+</body>
+
+</html>
