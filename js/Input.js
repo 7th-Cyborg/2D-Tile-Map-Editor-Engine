@@ -1,6 +1,8 @@
 var tileX, tileY = -1;
 var mouseDown = false, mouseDragging = false;
 var layerIndex = 0;
+var clearTile = false;
+var showGrid = false;
 
 function getLayerIndex() {
     var radios = document.querySelectorAll('input[type="radio"]:checked');
@@ -15,8 +17,18 @@ function radioButton(value) {
     layerIndex = value;
 }
 
+function clearTileCheckBox(e) {
+    clearTile = event.target.checked;
+}
+
+function showGridCheckBox(e) {
+    showGrid = event.target.checked;
+}
+
+
 function fillButton() {
-    fillLayer(map[0], layerIndex);
+    var value = clearTile ? 0 : 15;
+    fillLayer(map[layerIndex], value);
 }
 
 function onMouseDown(e) {
@@ -51,6 +63,6 @@ function paintTiles(e) {
     if (x != tileX || y != tileY) {
         tileX = x;
         tileY = y;
-        paintTile(0, x, y, layerIndex);
+        paintTile(layerIndex, x, y);
     }
 }

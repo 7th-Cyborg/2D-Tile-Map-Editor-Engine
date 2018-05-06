@@ -8,6 +8,8 @@ function initMap() {
     mapTilesTypes.forEach((type) => {
         addLayer(type);
     });
+
+    fillLayer(map[0],15);
 }
 
 function addLayer(layerType) {
@@ -39,7 +41,15 @@ function setTileValue(layer, x, y, value) {
     map[layer][y][x] = value;
 }
 
-function paintTile(layer, x, y, value) {
+function setBit(num, bit) {
+    return num | 1<<bit;
+}
+
+function clearBit(num, bit) {
+    return num & ~(1<<bit);
+}
+
+function paintTile(layer, x, y) {
     //Top
     var top = getTileValue(layer, x, y - 1);
     //Top Left
@@ -58,50 +68,55 @@ function paintTile(layer, x, y, value) {
     var bottomRight = getTileValue(layer, x + 1, y + 1);
 
     if (top != -1) {
-        top |= 1 << 3; // Set bit at position 3
-        top |= 1 << 2; // Set bit at position 2
-        setTileValue(layer, x, y - 1 , top);
+        top = clearTile ? clearBit(top, 3) : setBit(top, 3);
+        top = clearTile ? clearBit(top, 2) : setBit(top, 2);
+        setTileValue(layer, x, y - 1, top);
     }
 
     if (topLeft != -1) {
-        topLeft |= 1 << 3;
-        setTileValue(layer, x - 1, y - 1 , topLeft);
+        topLeft = clearTile ? clearBit(topLeft, 3) : setBit(topLeft, 3);
+        setTileValue(layer, x - 1, y - 1, topLeft);
     }
 
     if (topRight != -1) {
-        topRight |= 1 << 2;
-        setTileValue(layer, x + 1, y - 1 , topRight);
+        topRight = clearTile ? clearBit(topRight, 2) : setBit(topRight, 2);
+        setTileValue(layer, x + 1, y - 1, topRight);
     }
 
     if (left != -1) {
-        left |= 1 << 1;
-        left |= 1 << 3;
+        left = clearTile ? clearBit(left, 1) : setBit(left, 1);
+        left = clearTile ? clearBit(left, 3) : setBit(left, 3);
         setTileValue(layer, x - 1, y, left);
     }
 
     if (right != -1) {
-        right |= 1 << 0;
-        right |= 1 << 2;
+        right = clearTile ? clearBit(right, 0) : setBit(right, 0);
+        right = clearTile ? clearBit(right, 2) : setBit(right, 2);
         setTileValue(layer, x + 1, y, right);
     }
 
     if (bottom != -1) {
-        bottom |= 1 << 0;
-        bottom |= 1 << 1;
-        setTileValue(layer, x, y + 1 , bottom);
+        bottom = clearTile ? clearBit(bottom, 0) : setBit(bottom, 0);
+        bottom = clearTile ? clearBit(bottom, 1) : setBit(bottom, 1);
+        setTileValue(layer, x, y + 1, bottom);
     }
 
     if (bottomLeft != -1) {
-        bottomLeft |= 1 << 1;
-        setTileValue(layer, x - 1, y + 1 , bottomLeft);
+        bottomLeft = clearTile ? clearBit(bottomLeft, 1) : setBit(bottomLeft, 1);
+        setTileValue(layer, x - 1, y + 1, bottomLeft);
     }
 
     if (bottomRight != -1) {
-        bottomRight |= 1 << 0;
-        setTileValue(layer, x + 1, y + 1 , bottomRight);
+        bottomRight = clearTile ? clearBit(bottomRight, 0) : setBit(bottomRight, 0);
+        setTileValue(layer, x + 1, y + 1, bottomRight);
     }
 
-    setTileValue(layer, x, y, value);
+    if(clearTile) {
+        setTileValue(layer, x, y, 0);
+    } else {
+        setTileValue(layer, x, y, 15);
+    }
+    
 }
 
 function getTileValue(layer, x, y) {

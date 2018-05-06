@@ -1,6 +1,7 @@
 var ctx = null;
 var canvas =  null;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0;
+var tileSetImage = new Image();
 
 function Init() {
     canvas = document.getElementById('map');
@@ -13,6 +14,8 @@ function Init() {
     ctx = canvas.getContext("2d");
     requestAnimationFrame(Render);
     ctx.font = "bold 10pt sans-serif";
+
+    tileSetImage.src = 'image/tile-sets.png'; 
     initMap();
 }
 
@@ -36,25 +39,20 @@ function Render() {
 	{
 		for(var x = 0; x < mapWidth; x++)
 		{
-			switch(map[0][y][x])
-			{
-                case 0:
-                    ctx.fillStyle = "#0099ff";
-                    break;
-                case 1:
-                    ctx.fillStyle = "#ffffe6";
-                    break;
-                case 2:
-                    ctx.fillStyle = "#734d26";
-                    break;
-                case 3:
-                    ctx.fillStyle = "#339933";
-                    break;
-                default:
-                    ctx.fillStyle = "#000000";
-			}
+            //TO-DO Loop
+            var value = map[0][y][x];
+            var value2 = map[1][y][x];
+            var value3 = map[2][y][x];
+            var value4 = map[3][y][x];
 
-			ctx.fillRect( x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+            ctx.drawImage(tileSetImage, tileWidth * value, 0 * tileHeight, tileWidth, tileHeight, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+            ctx.drawImage(tileSetImage, tileWidth * value2, 1 * tileHeight, tileWidth, tileHeight, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+            ctx.drawImage(tileSetImage, tileWidth * value3, 2 * tileHeight, tileWidth, tileHeight, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+            ctx.drawImage(tileSetImage, tileWidth * value4, 3 * tileHeight, tileWidth, tileHeight, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+
+            if(showGrid) {
+                ctx.drawImage(tileSetImage, 0, 15 * tileHeight, tileWidth, tileHeight, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+            }
 		}
 	}
 
