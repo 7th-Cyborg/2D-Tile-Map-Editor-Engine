@@ -1,6 +1,6 @@
 var tileX, tileY = -1;
 var mouseDown = false, mouseDragging = false;
-var layerIndex;
+var layerIndex = 0;
 
 function getLayerIndex() {
     var radios = document.querySelectorAll('input[type="radio"]:checked');
@@ -51,6 +51,6 @@ function paintTiles(e) {
     if (x != tileX || y != tileY) {
         tileX = x;
         tileY = y;
-        changeTile(0, x, y, layerIndex);
+        paintTile(0, x, y, layerIndex);
     }
 }
