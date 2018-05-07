@@ -23,6 +23,7 @@ function clearTileCheckBox(e) {
 
 function showGridCheckBox(e) {
     showGrid = event.target.checked;
+    redrawMap = true;
 }
 
 

@@ -31,6 +31,7 @@ function fillLayer(layer, value) {
             layer[y][x] = value;
         }
     }
+    redrawMap = true;
 }
 
 function setTileValue(layer, x, y, value) {
@@ -116,6 +117,8 @@ function paintTile(layer, x, y) {
     } else {
         setTileValue(layer, x, y, 15);
     }
+
+    redrawMap = true;
     
 }
 
